@@ -1,24 +1,35 @@
 const express = require("express");
-const data = require("./datas/data.js"); // To'g'ri yo'l va import
+const http = require("http");
 const cors = require("cors");
+const socketIo = require("socket.io");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-const PORT = 4000;
 
-app.post("/login", (req, res) => {
-    const { uname, password } = req.body;
-
-    const userFound = data.some(user => user.uname === uname && user.psw === password);
-
-    if (userFound) {
-        res.status(200).send("Entered successfully");
-    } else {
-        res.status(400).send("Bad request");
+const server = http.createServer(app);
+const io = socketIo(server, {
+    cors: {
+        origin: "*",  // Ruxsat berilgan manzillarni belgilang
+        methods: ["GET", "POST"]
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+const PORT = 4000;
+
+io.on("connection", (socket) => {
+    console.log("User connected");
+
+    socket.on("sendMessage", ({ message, uname }) => {
+        // Xabarni foydalanuvchi nomi bilan birga hamma foydalanuvchilarga jo'natamiz
+        io.emit("receiveMessage", { message, uname });
+    });
+
+    socket.on("disconnect", () => {
+        console.log("User disconnected");
+    });
+});
+
+server.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
