@@ -9,7 +9,11 @@ app.use(express.json());
 const PORT = 4000;
 
 // Statik credentiallar, uni JSON fayl yoki ma'lumotlar bazasidan olish mumkin
-const credentials = users.users
+const credentials = [
+    { uname: "user1", psw: "password123" },
+    { uname: "user2", psw: "password456" },
+    { uname: "user3", psw: "password789" },
+];
 
 // Login marshruti
 app.post("/login", (req, res) => {
