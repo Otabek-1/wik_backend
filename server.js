@@ -1,23 +1,15 @@
 const express = require("express");
-const http = require("http");
 const cors = require("cors");
-const socketIo = require("socket.io");
-const credentials = require("./datas/data")
+const users = require("./datas/data")
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const server = http.createServer(app);
-const io = socketIo(server, {
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
-    }
-});
-
 const PORT = 4000;
 
+// Statik credentiallar, uni JSON fayl yoki ma'lumotlar bazasidan olish mumkin
+const credentials = users.users
 
 // Login marshruti
 app.post("/login", (req, res) => {
@@ -32,20 +24,24 @@ app.post("/login", (req, res) => {
     return res.status(200).json({ message: "Kirish muvaffaqiyatli", uname });
 });
 
-// Socket.io bo'yicha aloqa
-io.on("connection", (socket) => {
-    console.log("User connected");
+// Xabarlar qismi
+let messages = [];
 
-    socket.on("sendMessage", ({ message, uname }) => {
-        // Xabarni foydalanuvchi nomi bilan birga hamma foydalanuvchilarga jo'natamiz
-        io.emit("receiveMessage", { message, uname });
-    });
+app.post("/message", (req, res) => {
+    const { uname, message } = req.body;
+    if (!uname || !message) {
+        return res.status(400).json({ error: "Xabar yoki foydalanuvchi nomi yetarli emas" });
+    }
 
-    socket.on("disconnect", () => {
-        console.log("User disconnected");
-    });
+    // Xabarlarni foydalanuvchiga moslab arrayga qo'shamiz
+    messages.push({ from: uname, body: message });
+    return res.status(201).json({ message: "Xabar muvaffaqiyatli jo'natildi" });
 });
 
-server.listen(PORT, () => {
+app.get("/messages", (req, res) => {
+    res.status(200).json(messages);
+});
+
+app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
