@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const cors = require("cors");
 const socketIo = require("socket.io");
+const credentials = require("./datas/data")
 
 const app = express();
 app.use(cors());
@@ -16,18 +17,18 @@ const io = socketIo(server, {
 });
 
 const PORT = 4000;
-const users = [];  // Foydalanuvchilar ro'yxati
+
 
 // Login marshruti
 app.post("/login", (req, res) => {
-    const { uname } = req.body;
+    const { uname, password } = req.body;
 
-    // Foydalanuvchi nomini tekshirish
-    if (!uname || users.includes(uname)) {
-        return res.status(400).json({ error: "Noto'g'ri yoki takroriy foydalanuvchi nomi" });
+    // Foydalanuvchi nomini va parolni tekshirish
+    const user = credentials.find(user => user.uname === uname && user.psw === password);
+    if (!user) {
+        return res.status(400).json({ error: "Noto'g'ri foydalanuvchi nomi yoki parol" });
     }
 
-    users.push(uname);
     return res.status(200).json({ message: "Kirish muvaffaqiyatli", uname });
 });
 
