@@ -10,13 +10,28 @@ app.use(express.json());
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-        origin: "*",  // Ruxsat berilgan manzillarni belgilang
+        origin: "*",
         methods: ["GET", "POST"]
     }
 });
 
 const PORT = 4000;
+const users = [];  // Foydalanuvchilar ro'yxati
 
+// Login marshruti
+app.post("/login", (req, res) => {
+    const { uname } = req.body;
+
+    // Foydalanuvchi nomini tekshirish
+    if (!uname || users.includes(uname)) {
+        return res.status(400).json({ error: "Noto'g'ri yoki takroriy foydalanuvchi nomi" });
+    }
+
+    users.push(uname);
+    return res.status(200).json({ message: "Kirish muvaffaqiyatli", uname });
+});
+
+// Socket.io bo'yicha aloqa
 io.on("connection", (socket) => {
     console.log("User connected");
 
