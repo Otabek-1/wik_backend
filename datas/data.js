@@ -174,7 +174,7 @@ const informations = [
     { title: "Po‘latxon qo‘zg‘oloni", data: "Polatxon asli ismi Ishoq Hasan ogli bolib, Qoqon xoni Olimxon (1801 - 1810) nabirasi edi. U 18731876-yillarda soxta xon sifatida qozgolonga rahbarlik qilgan." },
     { title: "Rossiya imperiyasining O‘rta Osiyoni bosib olishi", data: "Orta Osiyo Rossiya imperiyasi tomonidan tort bosqichda bosib olindi. Birinchi bosqich (1847 - 1865)da Qoqon xonligining shimoli-garbiy viloyatlari va Toshkent shahri istilo qilindi. Ikkinchi bosqich (1865 - 1868)da Qoqon xonligi va Buxoro amirligiga qarshi harbiy harakatlar amalga oshirildi. Uchinchi bosqich (1873 - 1879)da Xiva xonligining bir qismi va Qoqon xonligining toliq yerlari bosib olindi. Tortinchi bosqich (1880 - 1885)da turkmanlar boysundirildi." },
     { title: "Turkiston general-gubernatorligining ma’muriy-hududiy tuzilishi", data: "Turkiston general-gubernatorligi vassallar sifatida Buxoro amirligi va Xiva xonligini oz ichiga olgan. Sirdaryo viloyatiga Gazali, Perovskiy, Chimkent, Avliyoota, Toshkent kirgan. Yettisuv viloyatiga Verniy, Jarkent, Kopal, Lepsinek, Prjevalsk uezdlari kirgan. Fargona viloyatiga Margilon, Andijon, Qoqon, Namangan, Osh uezdlari va Pomir kirgan. Samarqand viloyatiga Samarqand, Kattaqorgon, Jizzax va Xojand uezdlari kirgan. Kaspiyorti viloyatiga Ashxobod, Krasnovodsk, Mangishloq, Marv va Tajan uezdlari kirgan." },
-    // TURKISTON O‘LKASIDA SIYOSIYMA’MURIY BOSHQARUV TIZIM   shu mavzudan davom etiladi...
+    // TURKISTON O‘LKASIDA SIYOSIY - MA’MURIY BOSHQARUV TIZIM   shu mavzudan davom etiladi...
 ]
 
 module.exports = {

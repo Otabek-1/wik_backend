@@ -70,6 +70,7 @@ app.post("/search", (req, res) => {
 });
 
 // Ekran ma'lumotlarini saqlash uchun array
+
 let screens = [];
 
 // Ekran ma'lumotlarini qo'shish
