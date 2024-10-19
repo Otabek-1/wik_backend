@@ -10,7 +10,7 @@ const credentials = users.users;
 const infos = users.informations;
 app.post("/login", (req, res) => {
     const { uname, password } = req.body;
-    const user = credentials.find(user => user.uname === uname && crypto.createHash('sha256').update(user.psw).digest('hex') === password);
+    const user = credentials.find(user => user.uname === uname && user.psw === password);
     if (!user) {
         return res.status(400).json({ error: "Noto'g'ri foydalanuvchi nomi yoki parol" });
     }

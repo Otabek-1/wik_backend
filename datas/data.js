@@ -1,9 +1,9 @@
 const crypto = require('crypto');
 
 const users = [
-    { uname: "user1", psw: crypto.createHash('sha256').update("password123").digest('hex') },
-    { uname: "user2", psw: crypto.createHash('sha256').update("password456").digest('hex') },
-    { uname: "user3", psw: crypto.createHash('sha256').update("password789").digest('hex') },
+    { uname: "user1", psw: "password123" },
+    { uname: "user2", psw: "password456" },
+    { uname: "user3", psw: "password789" },
 ];
 
 
