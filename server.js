@@ -14,7 +14,7 @@ app.post("/login", (req, res) => {
     if (!user) {
         return res.status(400).json({ error: "Noto'g'ri foydalanuvchi nomi yoki parol" });
     }
-    return res.status(200).json({ message: "Kirish muvaffaqiyatli", uname });
+    return res.status(200).json({ message: `Kirish muvaffaqiyatli, ${uname}` });
 });
 let messages = [];
 app.post("/message", (req, res) => {
@@ -43,3 +43,5 @@ app.post("/search", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
