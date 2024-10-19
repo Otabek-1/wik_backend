@@ -292,6 +292,18 @@ const informations = [
     { title: "Orta Osiyoning Rossiya imperiyasi tomonidan bosib olinishi", data: "Orta Osiyoning Rossiya imperiyasi tomonidan bosib olinishi tort bosqichda amalga oshirildi. Birinchi bosqich - 1847 - 1865 - yillarda Rossiya imperiyasi tomonidan Qoqon xonligining shimoli - garbiy viloyatlari va Toshkent shahri istilo qilindi. Istilo etilgan hududlarda Orenburg general - gubernatorligi tarkibiga kiruvchi Turkiston viloyati tashkil etildi. Ikkinchi bosqich - 1865 - 1868 - yillar Qoqon xonligi va Buxoro amirligiga qarshi istilochilik harakatlari amalga oshirildi. Uchinchi bosqich - 1873 - 1879 - yillar davomida Xiva xonligi yerlarining bir qismi va Qoqon xonligining yerlari toliq bosib olindi. Tortinchi bosqich - 1880 - 1885 - yillarda turkmanlar boysundirildi." },
     { title: "Turkiston general-gubernatorligining ma’muriy-hududiy tuzilishi", data: "Turkiston general-gubernatorligi Buxoro amirligi va Xiva xonligiga vassal bolib, Sirdaryo viloyati tarkibiga: Gazali, Perovskiy, Chimkent, Avliyoota, Toshkent kirgan. Yettisuv viloyati tarkibiga: Verniy, Jarkent, Kopal, Lepsinek, Prjevalsk uyezdlari kirgan. Fargona viloyati tarkibiga: Margilon, Andijon, Qoqon, Namangan, Osh uyezdlari va Pomir kirgan. Samarqand viloyati tarkibiga: Samarqand, Kattaqorgon, Jizzax va Xojand uyezdlari kirgan. Kaspiyorti viloyati tarkibiga: Ashxobod, Krasnovodsk, Mangishloq, Marv va Tajan uyezdlari kirgan." }
     // TURKISTON OLKASIDA SIYOSIYMA’MURIY BOSHQARUV TIZIMI 33-betdan davom etadi.
+    
+
+
+
+
+
+
+
+
+
+    // Literature 1-chapter
+
 ]
 
 module.exports = {
