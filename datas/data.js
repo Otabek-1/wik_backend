@@ -1,7 +1,9 @@
+const crypto = require('crypto');
+
 const users = [
-    { uname: "user1", psw: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f" },
-    { uname: "user2", psw: "c6ba91b90d922e159893f46c387e5dc1b3dc5c101a5a4522f03b987177a24a91" },
-    { uname: "user3", psw: "5efc2b017da4f7736d192a74dde5891369e0685d4d38f2a455b6fcdab282df9c" },
+    { uname: "user1", psw: crypto.createHash('sha256').update("password123").digest('hex') },
+    { uname: "user2", psw: crypto.createHash('sha256').update("password456").digest('hex') },
+    { uname: "user3", psw: crypto.createHash('sha256').update("password789").digest('hex') },
 ];
 
 
