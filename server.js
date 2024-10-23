@@ -28,6 +28,31 @@ app.post("/message", (req, res) => {
 app.get("/messages", (req, res) => {
     res.status(200).json(messages);
 });
+
+const replies = [];
+
+app.post("/reply", (req, res) => {
+    const { id, body } = req.body;
+    replies.push({ id: id.toString(), body: body }); // id ni stringga aylantirish
+    return res.status(201).json({ message: "Javob muvaffaqiyatli jo'natildi" });
+})
+
+app.get("/replies/:id", (req, res) => {
+    const { id } = req.params;
+    const results = replies.filter(replied =>
+        replied.id === id.toString() // id ni stringga aylantirib solishtirish
+    );
+    if (results.length > 0) {
+        res.status(200).json(results);
+    } else {
+        res.status(404).json({ message: "Javob topilmadi!" });
+    }
+});
+
+app.get("/replyall",(req,res)=>{
+    res.status(200).json(replies);
+})
+
 app.post("/search", (req, res) => {
     const { text } = req.body;
     const lowerCaseText = text.toLowerCase();
@@ -37,11 +62,10 @@ app.post("/search", (req, res) => {
     if (results.length > 0) {
         res.status(200).json(results);
     } else {
-        res.status(404).json({ message: "Hech narsa topilmadi" });
+        res.status(404).json({ message: "Nothing found!" });
     }
 });
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
