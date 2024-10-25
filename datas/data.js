@@ -215,10 +215,16 @@ const informations = [
     { title: "Jazo ekspeditsiyasi", data: "General-gubernator N. Korolkov qozgolonchilarni yoq qilish uchun jazo ekspeditsiyasiga rahbarlik qildi, Dukchi eshon va uning safdoshlari jazolandi." },
     { title: "Mahalliy aholi kurashi", data: "1898-yilda qozgolon mahalliy aholining mustamlakachilik zulmiga qarshi kurash olib borish imkoniyatini korsatdi." },
     { title: "Mustaqillik va ozodlik uchun kurash", data: "Garchi qozgolon tor-mor etilgan bolsa-da, mahalliy xalqlarning mustaqillik va ozodlik uchun kurashlari davom etdi." },
-    { title: "Davom etayotgan qo‘zg‘olonlar", data: "Mustamlakachilikka qarshi qozgolonlar Turkiston olkasining deyarli barcha hududlarida davom etdi." }
+    { title: "Davom etayotgan qo‘zg‘olonlar", data: "Mustamlakachilikka qarshi qozgolonlar Turkiston olkasining deyarli barcha hududlarida davom etdi." },
+]
+
+
+const imageInformations = [
+    { title: "Bug' mashinasi", src:"../src/images/img1.png", keywords:"forest" },
 ]
 
 module.exports = {
     users,
     informations,
+    imageInformations
 }
