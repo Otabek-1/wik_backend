@@ -23,14 +23,15 @@ let replies = [];
 
 // Message posting route (text-only)
 app.post("/message", (req, res) => {
-    const { uname, message } = req.body;
+    const { uname, message, image } = req.body; // Added image to destructuring
     if (!uname || !message) {
         return res.status(400).json({ error: "Xabar yoki foydalanuvchi nomi yetarli emas" });
     }
 
-    messages.push({ from: uname, body: message });
+    messages.push({ from: uname, body: message, image }); // Store the image with the message
     return res.status(201).json({ message: "Xabar muvaffaqiyatli jo'natildi" });
 });
+
 
 app.get("/messages", (req, res) => res.status(200).json(messages));
 
