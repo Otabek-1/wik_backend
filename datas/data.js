@@ -1,5 +1,3 @@
-const crypto = require('crypto');
-
 const users = [
     { uname: "user1", psw: "password123" },
     { uname: "user2", psw: "password456" },
