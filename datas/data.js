@@ -321,5 +321,5 @@ const informations = [
 module.exports = {
     users,
     informations,
-    imageInformations
+
 }
