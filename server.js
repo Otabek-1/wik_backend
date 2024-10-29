@@ -28,9 +28,18 @@ app.post("/message", (req, res) => {
         return res.status(400).json({ error: "Xabar yoki foydalanuvchi nomi yetarli emas" });
     }
 
+    if (message === "#history") {
+        const images = [
+            "./src/images/1.jpg", 
+            "./src/images/2.jpg"
+        ];
+        return res.status(200).json({ from: "Server", body: "Test of history", images });
+    }
+
     messages.push({ from: uname, body: message, image }); // Store the image with the message
     return res.status(201).json({ message: "Xabar muvaffaqiyatli jo'natildi" });
 });
+
 
 
 app.get("/messages", (req, res) => res.status(200).json(messages));
