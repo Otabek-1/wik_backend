@@ -34,7 +34,7 @@ app.post("/message", (req, res) => {
             "./src/images/2.jpg"
         ];
         messages.push({ from: "Server", body: "Test of history", images })
-        return res.status(200).json({ from: "Server", body: "Test of history", images });
+        return res.status(200).json({ from: "Server", body: "Test of history",  "./src/images/2.jpg" });
     }
 
     messages.push({ from: uname, body: message, image }); // Store the image with the message
