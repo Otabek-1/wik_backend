@@ -28,13 +28,9 @@ app.post("/message", (req, res) => {
         return res.status(400).json({ error: "Xabar yoki foydalanuvchi nomi yetarli emas" });
     }
 
-    if (message === "#history") {
-        const images = [
-            "./src/images/1.jpg", 
-            "./src/images/2.jpg"
-        ];
+    if (message === "#history1") {
         messages.push({ from: "Server", body: "Test of history", images })
-        return res.status(200).json({ from: "Server", body: "Test of history",  "./src/images/2.jpg" });
+        return res.status(200).json({ from: "Server", body: "Test of history",  "https://ibb.co/n6Wk5jc" });
     }
 
     messages.push({ from: uname, body: message, image }); // Store the image with the message
