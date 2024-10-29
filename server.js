@@ -32,16 +32,19 @@ app.post("/message", (req, res) => {
 
     // Check for specific history commands
     if (message === "#history1") {
-        messages.push(from:"Server", body:"1-image:  https://ibb.co/n6Wk5jc \n 2-image:  https://ibb.co/F09hsYr");
-    }else{
+        // Push a message from the server with image links
+        messages.push({ 
+            from: "Server", 
+            body: "1-image: https://ibb.co/n6Wk5jc \n2-image: https://ibb.co/F09hsYr", 
+            img: null // img can be null if not applicable
+        });
+    } else {
         messages.push({ from: uname, body: message, img }); // Store the image with the message
     }
-
 
     // Return the appropriate response
     return res.status(201).json({ message: "Xabar muvaffaqiyatli jo'natildi", img });
 });
-
 
 
 
