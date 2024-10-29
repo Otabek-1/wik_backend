@@ -35,7 +35,7 @@ app.post("/message", (req, res) => {
         // Push a message from the server with image links
         messages.push({ 
             from: "Server", 
-            body: "1-image: https://ibb.co/n6Wk5jc \n2-image: https://ibb.co/F09hsYr", 
+            body: "1-image: https://ibb.co/n6Wk5jc/1.jpg \n2-image: https://ibb.co/F09hsYr/2.jpg", 
             img: null // img can be null if not applicable
         });
     } else {
