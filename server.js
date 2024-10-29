@@ -27,13 +27,18 @@ app.post("/message", (req, res) => {
     if (!uname || !message) {
         return res.status(400).json({ error: "Xabar yoki foydalanuvchi nomi yetarli emas" });
     }
+    const img = "";
 
     if (message === "#history1") {
-        messages.push({ from: "Server", body: "Test of history", images })
-        return res.status(200).json({ from: "Server", body: "Test of history",  image:"https://ibb.co/n6Wk5jc" });
+        img  = "https://ibb.co/n6Wk5jc";
+    }else if(message === "#history2"){
+        img  = "https://ibb.co/F09hsYr";
+    }else{
+        img = image;
     }
+    
 
-    messages.push({ from: uname, body: message, image }); // Store the image with the message
+    messages.push({ from: uname, body: message, img }); // Store the image with the message
     return res.status(201).json({ message: "Xabar muvaffaqiyatli jo'natildi" });
 });
 
