@@ -28,19 +28,23 @@ app.post("/message", (req, res) => {
         return res.status(400).json({ error: "Xabar yoki foydalanuvchi nomi yetarli emas" });
     }
     
-    let img = ""; // Use 'let' instead of 'const' to allow reassignment
+    let img; // Declare img without an initial value
 
+    // Check for specific history commands
     if (message === "#history1") {
-        img = "https://ibb.co/n6Wk5jc";
+        img = "https://ibb.co/n6Wk5jc"; // Link for #history1
     } else if (message === "#history2") {
-        img = "https://ibb.co/F09hsYr";
+        img = "https://ibb.co/F09hsYr"; // Link for #history2
     } else {
         img = image; // Use the image from the request if no history command is matched
     }
 
     messages.push({ from: uname, body: message, img }); // Store the image with the message
-    return res.status(201).json({ message: "Xabar muvaffaqiyatli jo'natildi" });
+
+    // Return the appropriate response
+    return res.status(201).json({ message: "Xabar muvaffaqiyatli jo'natildi", img });
 });
+
 
 
 
