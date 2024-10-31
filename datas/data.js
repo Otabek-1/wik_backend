@@ -1,7 +1,8 @@
 const users = [
-    { uname: "user1", psw: "password123" },
-    { uname: "user2", psw: "password456" },
-    { uname: "user3", psw: "password789" },
+    { uname: "user1", psw: "password123", fullName: "Otabek Burhonov", id: 123321 },
+    { uname: "user2", psw: "password456", fullName: "Ulug'bek Abduqodirov", id: 123322 },
+    { uname: "user3", psw: "password789", fullName: "Ibrohim Tursunboyev", id: 123323 },
+    { uname: "user4", psw: "password101112", fullName: "Eshpo'latov Elbek", id: 123324 }
 ];
 
 
@@ -317,6 +318,8 @@ const informations = [
     // Literature 1-chapter
 
 ]
+
+
 
 module.exports = {
     users,
