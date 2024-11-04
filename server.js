@@ -8,6 +8,7 @@ const users = require("./datas/data");
 const { message } = require("telegraf/filters");
 
 const Users = users.users;
+const Informations = users.informations;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -53,6 +54,12 @@ app.post('/send', upload.single('image'), (req, res) => {
     messages.push({ id, from, body, image, msgfrom, msgto });
     res.status(200).json({ message: 'Message sent successfully' });
 });
+
+app.post('/ai-find',(req,res)=>{
+    const {keyword} = req.body;
+    const result = Informations.filter(info => info.data.toLowerCase().includes(keyword.toLowerCase()));
+    res.status(200).json(result);
+})
 
 app.get("/messages", (req,res)=>{
     res.send(JSON.stringify(messages));
