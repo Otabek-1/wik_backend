@@ -1,38 +1,65 @@
 const express = require("express");
 const crypto = require('crypto');
 const cors = require("cors");
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 const users = require("./datas/data");
+const { message } = require("telegraf/filters");
+
+const Users = users.users;
 const app = express();
 app.use(cors());
 app.use(express.json());
+
 const PORT = 4000;
-const credentials = users.users;
-const infos = users.informations;
 
-// Login marshruti
-app.post("/login", (req, res) => {
-    const { uname, password } = req.body;
-    const user = credentials.find(user => user.uname === uname && user.psw === password);
-    if (!user) {
-        return res.status(400).json({ error: "Noto'g'ri foydalanuvchi nomi yoki parol" });
+app.post("/login", (req,res)=>{
+    const {uname, password} = req.body;
+    const userInfo = Users.filter(user => user.uname == uname && user.psw == password)
+    if(userInfo.length >0){
+        res.status(200).send(userInfo);
+    }else{
+        res.status(404).send({message:"Invalid username or password"})
     }
-    return res.status(200).json({ message: `Kirish muvaffaqiyatli, ${uname}`, user: user });
+})
+
+// Ensure 'uploads' directory exists
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
+
+// Set up multer storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${crypto.randomBytes(16).toString('hex')}-${file.originalname}`);
+    }
 });
+
+const upload = multer({ storage });
+
 let messages = [];
-let replies = [];
 
-app.get('/messages',(req,res)=>{
-    res.json(messages);
+app.use('/uploads', express.static(uploadDir));
+
+app.post('/send', upload.single('image'), (req, res) => {
+    const { id, from, body, msgfrom, msgto } = req.body;
+    const image = req.file ? req.file.filename : null; // Check if file was uploaded
+
+    messages.push({ id, from, body, image, msgfrom, msgto });
+    res.status(200).json({ message: 'Message sent successfully' });
+});
+
+app.get("/messages", (req,res)=>{
+    res.send(JSON.stringify(messages));
 })
 
-app.get("/users", (req,res)=>{
-    res.send(credentials);
-})
-
-app.post('/send',(req,res)=>{
-    const {id, from, body} = req.body;
-    messages.push({id, from, body});
-    res.status(200).json({message: 'Mesaj yuborildi'});
+app.get("/users",(req,res)=>{
+    res.send(JSON.stringify(Users));
 })
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

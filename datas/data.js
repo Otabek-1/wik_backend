@@ -1,4 +1,5 @@
 const users = [
+    { uname: "server", psw: "server", fullName: "Server", id: 111111 },
     { uname: "user1", psw: "password123", fullName: "Otabek Burhonov", id: 123321 },
     { uname: "user2", psw: "password456", fullName: "Ulug'bek Abduqodirov", id: 123322 },
     { uname: "user3", psw: "password789", fullName: "Ibrohim Tursunboyev", id: 123323 },
