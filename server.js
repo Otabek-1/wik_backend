@@ -55,11 +55,24 @@ app.post('/send', upload.single('image'), (req, res) => {
     res.status(200).json({ message: 'Message sent successfully' });
 });
 
-app.post('/ai-find',(req,res)=>{
-    const {keyword} = req.body;
-    const result = Informations.filter(info => info.data.toLowerCase().includes(keyword.toLowerCase()));
+app.post('/ai-find', (req, res) => {
+    // req.body dan keywords ni olish
+    const { keywords } = req.body;
+
+    // keywords mavjudligini tekshirish
+    if (!keywords || typeof keywords !== 'string') {
+        return res.status(400).json({ error: 'Keywords taqdim etilmadi yoki noto\'g\'ri formatda' });
+    }
+
+    // Keywordni ishlatish
+    const result = Informations.filter(info => 
+        info.data.toLowerCase().includes(keywords.toLowerCase())
+    );
+
     res.status(200).json(result);
-})
+});
+
+
 
 app.get("/messages", (req,res)=>{
     res.send(JSON.stringify(messages));
