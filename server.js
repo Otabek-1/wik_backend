@@ -48,10 +48,10 @@ let messages = [];
 app.use('/uploads', express.static(uploadDir));
 
 app.post('/send', upload.single('image'), (req, res) => {
-    const { id, msgId, from, body, msgfrom, msgto } = req.body;
+    const { id, msgId, replyfor, from, body, msgfrom, msgto } = req.body;
     const image = req.file ? req.file.filename : null; // Check if file was uploaded
 
-    messages.push({ id, msgId, from, body, image, msgfrom, msgto });
+    messages.push({ id, msgId, replyfor, from, body, image, msgfrom, msgto });
     res.status(200).json({ message: 'Message sent successfully' });
 });
 
