@@ -15,13 +15,13 @@ app.use(express.json());
 
 const PORT = 4000;
 
-app.post("/login", (req,res)=>{
-    const {uname, password} = req.body;
+app.post("/login", (req, res) => {
+    const { uname, password } = req.body;
     const userInfo = Users.filter(user => user.uname == uname && user.psw == password)
-    if(userInfo.length >0){
+    if (userInfo.length > 0) {
         res.status(200).send(userInfo);
-    }else{
-        res.status(404).send({message:"Invalid username or password"})
+    } else {
+        res.status(404).send({ message: "Invalid username or password" })
     }
 })
 
@@ -48,10 +48,10 @@ let messages = [];
 app.use('/uploads', express.static(uploadDir));
 
 app.post('/send', upload.single('image'), (req, res) => {
-    const { id, from, body, msgfrom, msgto } = req.body;
+    const { id, msgId, from, body, msgfrom, msgto } = req.body;
     const image = req.file ? req.file.filename : null; // Check if file was uploaded
 
-    messages.push({ id, from, body, image, msgfrom, msgto });
+    messages.push({ id, msgId, from, body, image, msgfrom, msgto });
     res.status(200).json({ message: 'Message sent successfully' });
 });
 
@@ -65,7 +65,7 @@ app.post('/ai-find', (req, res) => {
     }
 
     // Keywordni ishlatish
-    const result = Informations.filter(info => 
+    const result = Informations.filter(info =>
         info.data.toLowerCase().includes(keywords.toLowerCase())
     );
 
@@ -74,11 +74,11 @@ app.post('/ai-find', (req, res) => {
 
 
 
-app.get("/messages", (req,res)=>{
+app.get("/messages", (req, res) => {
     res.send(JSON.stringify(messages));
 })
 
-app.get("/users",(req,res)=>{
+app.get("/users", (req, res) => {
     res.send(JSON.stringify(Users));
 })
 
