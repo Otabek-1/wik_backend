@@ -55,7 +55,7 @@ function Chatai( id, msgId, replyfor, from, body, msgfrom, msgto){
         res = `Salom, ${resFor[0].fullName.split(" ")[0]}!`;
     }
 
-    messages.push({ id, msgId, replyfor, from, body, image, msgfrom, msgto })
+    messages.push({ id, msgId, replyfor, from, body, msgfrom, msgto })
     messages.push({id:11101,msgId:Date.now(),replyfor:msgId, from:"Ai", body:res, msgfrom:11101,msgto:id})
 }
 
