@@ -3,14 +3,10 @@ const crypto = require('crypto');
 const cors = require("cors");
 const multer = require('multer');
 const path = require('path');
-const brain = require('brain.js');
-const natural = require('natural');
 const fs = require('fs');
 const users = require("./datas/data");
 const { message } = require("telegraf/filters");
 
-const net = new brain.NeuralNetwork();
-const tokenizer = new natural.WordTokenizer();
 
 const Users = users.users;
 const Informations = users.informations;
@@ -52,46 +48,18 @@ let messages = [];
 
 app.use('/uploads', express.static(uploadDir));
 
-function Chatai(id, msgId, replyfor, from, body, msgfrom, msgto) {
-    // Brain.js neyron tarmog'ini yaratish va o'qitish
-    const net = new brain.NeuralNetwork();
+function Chatai( id, msgId, replyfor, from, body, msgfrom, msgto){
 
-    // O'qitish ma'lumotlari
-    const trainingData = [
-        { input: tokenizer.tokenize('What is your name?'), output: { name: 1 } },
-        { input: tokenizer.tokenize('How are you?'), output: { fine: 1 } },
-        { input: tokenizer.tokenize('What is the capital of Russia?'), output: { Moscow: 1 } },
-        { input: tokenizer.tokenize('Who is the president of the US?'), output: { Biden: 1 } },
-        // Qo'shimcha savollar va javoblar
-    ];
-
-    // Tarmoqni o'qitish
-    net.train(trainingData);
-
-    // Matnni tokenizatsiya qilish
-    const req = body.toLowerCase();  // Matnni kichik harflarga o'zgartirish
-
-    // Modelni ishlatib, javob olish
-    const output = net.run(tokenizer.tokenize(req));
-
-    let res = ``;
-
-    // Tarmoqdan olingan javobni chiqarish
-    if (output.Moscow) {
-        res = 'Moscow';
-    } else if (output.name) {
-        res = 'I am a chatbot!';
-    } else if (output.fine) {
-        res = 'I am doing great, thank you!';
-    } else {
-        res = "Sorry, I don't understand the question.";
+    const req = body;
+    let res= ``;
+    if(req.includes("hi")){
+        const resFor = Users.filter(user => user.id == msgfrom);
+        res = `Salom, ${resFor[0].fullName.split(" ")[0]}!`;
     }
 
-    // Xabarlarni push qilish
-    messages.push({ id, msgId, replyfor, from, body, msgfrom, msgto });
-    messages.push({ id: 11101, msgId: Date.now(), replyfor: msgId, from: "Ai", body: res, msgfrom: 11101, msgto: id });
+    messages.push({ id, msgId, replyfor, from, body, msgfrom, msgto })
+    messages.push({id:11101,msgId:Date.now(),replyfor:msgId, from:"Ai", body:res, msgfrom:11101,msgto:id})
 }
-
 
 
 app.post('/send', upload.single('image'), (req, res) => {
