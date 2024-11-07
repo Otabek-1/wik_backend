@@ -52,7 +52,7 @@ function Chatai( id, msgId, replyfor, from, body, msgfrom, msgto){
     let res= ``;
     if(req.includes("hi")){
         const resFor = Users.filter(user => user.id == msgfrom);
-        res = `Salom, ${resFor.fullName.split(" ")[0]}!`;
+        res = `Salom, ${resFor[0].fullName.split(" ")[0]}!`;
     }
 
     messages.push({ id, msgId, replyfor, from, body, image, msgfrom, msgto })
