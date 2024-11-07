@@ -49,7 +49,7 @@ app.use('/uploads', express.static(uploadDir));
 
 function Chatai( id, msgId, replyfor, from, body, msgfrom, msgto){
     const req = body;
-    const res= ``;
+    let res= ``;
     if(req.includes("hi")){
         const resFor = Users.filter(user => user.id == msgfrom);
         res = `Salom, ${resFor.fullName.split(" ")[0]}!`;
