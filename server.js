@@ -123,7 +123,7 @@ function Chatai(id, msgId, replyfor, from, body, msgfrom, msgto) {
         } else {
             res = repsonses.output.replace("$1", resFor.fullName.split(" ")[0]);
         }
-        messages.push({ id, msgId, replyfor, from, body, msgfrom, msgto });
+        messages.push({ id, msgId, replyfor:"", from, body, msgfrom, msgto });
         messages.push({ id: 11101, msgId: Date.now(), replyfor: msgId, from: "Ai", body: res, msgfrom: 11101, msgto: id });
     } else {
         // Agar response yoki resFor topilmadi, xatolikni qaytaring
