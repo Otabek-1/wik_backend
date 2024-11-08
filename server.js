@@ -4,12 +4,15 @@ const cors = require("cors");
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const levenshtein = require('fast-levenshtein');
+const FuzzySet = require('fuzzyset.js');
 const users = require("./datas/data");
 const { message } = require("telegraf/filters");
 
 
 const Users = users.users;
 const Informations = users.informations;
+const Quests = users.quests;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -48,31 +51,103 @@ let messages = [];
 
 app.use('/uploads', express.static(uploadDir));
 
-function Chatai( id, msgId, replyfor, from, body, msgfrom, msgto){
 
-    const req = body;
-    let res= ``;
-    if(req.includes("hi")){
-        const resFor = Users.filter(user => user.id == msgfrom);
-        res = `Salom, ${resFor[0].fullName.split(" ")[0]}!`;
+const negativeWords = ["darmayitsan", "yomon", "qoyilmasdan", "buzilgan", "ajratish", "qotilgan", "fuckyou ", "fckyou ", "fucku", " suka ", "darmayit ", "cort"];  // Salbiy so'zlar ro'yxati
+const personalPronouns = ["sen", "men", "u", "biz", "siz"];  // Shaxsiy zamonlar
+
+// Response (Javob) uchun sokin so'zlarni aniqlash
+function isNegativeResponse(req) {
+    return req.some(word => negativeWords.includes(word));
+}
+
+// So'zlar bo'yicha javobni topish va tartiblash
+
+function getBestResponse(req) {
+    const sortedResponses = Quests
+        .map(quest => {
+            const questWords = quest.input.split(" ");
+            const fuzzySet = FuzzySet(questWords);
+            const matchingWordsCount = req.reduce((acc, word) => {
+                const matches = fuzzySet.get(word); // So'zni qidirish va noaniq moslikni topish
+                return matches && matches.length > 0 ? acc + 1 : acc;
+            }, 0);
+
+            return { quest, matchingWordsCount };
+        })
+        .filter(item => item.matchingWordsCount > 0)
+        .sort((a, b) => b.matchingWordsCount - a.matchingWordsCount);
+
+    return sortedResponses.length > 0 ? sortedResponses[0].quest : null;
+}
+
+
+let res = "";
+
+function Chatai(id, msgId, replyfor, from, body, msgfrom, msgto) {
+    const req = body.split(" ").slice(1); // reqning birinchi so'zini olishdan qochish uchun slice(1)
+
+    // Salbiy so'zlar bo'lsa, alohida javob qaytarish
+    if (isNegativeResponse(req)) {
+        console.log("Salbiy so'zlar mavjud: javob berish...");
+        const resFor = Users.find(user => user.id == msgfrom); // Foydalanuvchini topamiz
+        let res = "Xatolikka yo'l qo'ygan bo'lsam uzr, bunday qo'pol so'zlardan foydalanmaslikni tavsiya qilaman 😉";
+        messages.push({ id, msgId, replyfor, from, body, msgfrom, msgto });
+        messages.push({ id: 11101, msgId: Date.now(), replyfor: msgId, from: "Ai", body: res, msgfrom: 11101, msgto: id });
+        return; // Salbiy javob qaytargach, qolgan jarayonni to'xtatamiz
     }
 
-    messages.push({ id, msgId, replyfor, from, body, msgfrom, msgto })
-    messages.push({id:11101,msgId:Date.now(),replyfor:msgId, from:"Ai", body:res, msgfrom:11101,msgto:id})
+    // Quests massivida eng mos javobni topamiz
+    const repsonses = getBestResponse(req);
+
+    // resFor ni aniqlashdan oldin ishlatmaslik kerak
+    const resFor = Users.find(user => user.id == msgfrom); // find() metodini ishlatamiz, filter() o'rniga
+    console.log("req:", req); // req qiymatini tekshirish
+    console.log("repsonses:", repsonses); // repsonses qiymatini tekshirish
+    console.log("resFor:", resFor); // resFor qiymatini tekshirish
+
+    if (repsonses && resFor) {
+        let res;
+        if (repsonses.output === "must_solve") {
+            // Arifmetik ifodani chiqarish
+            const expressionMatch = body.match(/[\d+\-*/]+/g); // Matndagi ifodani topish
+            if (expressionMatch) {
+                const expression = expressionMatch.join(''); // Ifodani matn ko'rinishiga keltirish
+                try {
+                    res = `${expression} ning javobi ${eval(expression)} ga teng.`; // Ifodani hisoblash
+                } catch (error) {
+                    res = "Ifoda noto'g'ri yozilgan.";
+                }
+            } else {
+                res = "Arifmetik ifoda topilmadi.";
+            }
+        } else {
+            res = repsonses.output.replace("$1", resFor.fullName.split(" ")[0]);
+        }
+        messages.push({ id, msgId, replyfor, from, body, msgfrom, msgto });
+        messages.push({ id: 11101, msgId: Date.now(), replyfor: msgId, from: "Ai", body: res, msgfrom: 11101, msgto: id });
+    } else {
+        // Agar response yoki resFor topilmadi, xatolikni qaytaring
+        if (!repsonses) {
+            console.log("Response topilmadi: kiritilgan so'zlar mos kelmadi.");
+        }
+        if (!resFor) {
+            console.log("Foydalanuvchi topilmadi: msgfrom ID bo'yicha foydalanuvchi mavjud emas.");
+        }
+    }
 }
 
 
 app.post('/send', upload.single('image'), (req, res) => {
     const { id, msgId, replyfor, from, body, msgfrom, msgto } = req.body;
     const image = req.file ? req.file.filename : null; // Check if file was uploaded
-    if(body.startsWith('#ai')){
-        Chatai( id, msgId, replyfor, from, body, msgfrom, msgto);
-    }else{
+    if (body.startsWith('#ai')) {
+        Chatai(id, msgId, replyfor, from, body, msgfrom, msgto);
+    } else {
         messages.push({ id, msgId, replyfor, from, body, image, msgfrom, msgto });
-        
+
     }
     res.status(200).json({ message: 'Message sent successfully' });
- 
+
 });
 
 app.post('/ai-find', (req, res) => {

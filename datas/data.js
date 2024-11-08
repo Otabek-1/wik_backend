@@ -6,6 +6,17 @@ const users = [
     { uname: "user4", psw: "password101112", fullName: "Eshpo'latov Elbek", id: 123324 }
 ];
 
+const quests = [
+    { input: "hello hi salom", output: `Salom, $1! Sizga qanday yordam bera olishim mumkin?` },
+    { input: "sen kimsan nimasan qanday suniy intellektsan qanaqasan", output: "Men hozirda endi yaratilgan va eng sodda darajadagi sun'iy intellektman va tez orada bundan yaxshiroq bo'lish imkoniyati mavjud." },
+    { input: "sen nimalar qila olasan imkoniyatlaring qolingdan nimalar keladi qo'lingdan qulingan", output: "Menda hozircha uncha katta imkoniyatlar mavjud emas lekin tez orada sizga yordam bera oladigan darajada bo'la olaman." },
+    { input: " qaysi fanlardan yordam bera olasan berolasan yonalishlardan yonalishdan", output: "Hozircha hech qanday ilmiy ma'lumotlarga ega emasman va hozirda imkoniyatim faqat suhbatlashish uchun yetadi ammo bu uzoq vaqtga emas." },
+    { input: "fuckyou fckyou fucku suka darmayit cort ", output: " Xatolikka yo'l qo'ygan bo'lsam uzr ammo bunday qo'pol so'zlardan foydalanmaslikni tavsiya qilaman 😉" },
+    { input: "xato xatolikka yol qoyding bunday emas sen xato aytding xatoku notogriku xato-ku notogri-ku", output: "Xatolik uchun uzr so'rayman, men hali to'liq ishlab chiqilmaganman va shuni hisobiga xatoliklarga yo'l qo'yishim mumkin." },
+    { input: "shu nechi boladi shuni ishlab ber javobi nechi hisoblab ber ishlab ber + - / * // ", output: "must_solve" },
+    { input: "tenglamalarni ham ishlay olasanmi ishlab ber x + - / * // ", output: "Men faqat sonli ifodalarnigina ishlay olaman, tenglama va harfli ifoda qatnashgan misollarni ishlash imkoniyati mavjud emas." }
+];
+
 
 const informations = [
     { title: "Darslik ma'lumotlari davrlar oraligida", data: "Qolingizdagi Ozbekiston tarixi darsligi XIX asrning ikkinchi yarmi va XX asrning 90-yillariga qadar sodir bolgan voqealarni oz ichiga oladi. Bu davr Vatanimiz tarixining eng murakkab va ziddiyatli yillaridir. ", },
@@ -325,5 +336,5 @@ const informations = [
 module.exports = {
     users,
     informations,
-
+    quests,
 }
