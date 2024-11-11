@@ -14,7 +14,8 @@ const quests = [
     { input: "fuckyou fckyou fucku suka darmayit cort ", output: " Xatolikka yo'l qo'ygan bo'lsam uzr ammo bunday qo'pol so'zlardan foydalanmaslikni tavsiya qilaman 😉" },
     { input: "xato xatolikka yol qoyding bunday emas sen xato aytding xatoku notogriku xato-ku notogri-ku", output: "Xatolik uchun uzr so'rayman, men hali to'liq ishlab chiqilmaganman va shuni hisobiga xatoliklarga yo'l qo'yishim mumkin." },
     { input: "shu nechi boladi shuni ishlab ber javobi nechi hisoblab ber ishlab ber + - / * // ", output: "must_solve" },
-    { input: "tenglamalarni ham ishlay olasanmi ishlab ber x + - / * // ", output: "Men faqat sonli ifodalarnigina ishlay olaman, tenglama va harfli ifoda qatnashgan misollarni ishlash imkoniyati mavjud emas." }
+    { input: "tenglamalarni ham ishlay olasanmi ishlab ber x + - / * // ", output: "Men faqat sonli ifodalarnigina ishlay olaman, tenglama va harfli ifoda qatnashgan misollarni ishlash imkoniyati mavjud emas." },
+    { input: "10010512111111497",output:" ?" }
 ];
 
 
