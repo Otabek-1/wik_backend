@@ -15,11 +15,17 @@ const quests = [
     { input: "xato xatolikka yol qoyding bunday emas sen xato aytding xatoku notogriku xato-ku notogri-ku", output: "Xatolik uchun uzr so'rayman, men hali to'liq ishlab chiqilmaganman va shuni hisobiga xatoliklarga yo'l qo'yishim mumkin." },
     { input: "shu nechi boladi shuni ishlab ber javobi nechi hisoblab ber ishlab ber + - / * // ", output: "must_solve" },
     { input: "tenglamalarni ham ishlay olasanmi ishlab ber x + - / * // ", output: "Men faqat sonli ifodalarnigina ishlay olaman, tenglama va harfli ifoda qatnashgan misollarni ishlash imkoniyati mavjud emas." },
-    { input: "10010512111111497",output:" ?" },
-    {input:"Maʼlumotlar nima haqida ma'lumot ber", output:"Ma'lumotlar -  qayta ishlanmagan (xom) raqamlar, harﬂar,ramzlar, tovushlar yoki maʼnosiz tasvirlar "},
-    {input:"Axborot nima haqida ma'lumot ber", output:"Axborot -   kontekst va mazmunga ega maʼlumotlar. "},
-    {input:"Bilimlar bazasi nima haqida ma'lumot ber", output:"Bilimlar bazasi - inson tajribasi qoʻllangan axborot "},
-    {input:"JavaScript nima haqida ma'lumot ber", output:" veb sahifalarga interfaollik qoʻshish uchun ishlatiladigan dasturlash tili. Uning kodi tugmalar hamda matn maydonini yaratish, kontentni oʻzgartirish va shu kabilar uchun HTML fayli bilan birlashtirilishi mumkin. U PHP kabi boshqa veb dasturlash tillari bilan ham birlashtirilishi mumkin. JavaScript odatda maʼlumotni tasdiqlashi yoki tugma bosilishi kabi harakatlarni amalga oshirishi mumkin bo‘lgan HTML shakllari bilan birga ishlatiladi. "},
+    { input: "10010512111111497", output: " ?" },
+    { input: "maʼlumotlar nima haqida ma'lumot ber", output: "Ma'lumotlar -  qayta ishlanmagan (xom) raqamlar, harﬂar,ramzlar, tovushlar yoki maʼnosiz tasvirlar " },
+    { input: "mxborot nima haqida ma'lumot ber", output: "Axborot -   kontekst va mazmunga ega maʼlumotlar. " },
+    { input: "milimlar bazasi nima haqida ma'lumot ber", output: "Bilimlar bazasi - inson tajribasi qoʻllangan axborot " },
+    { input: "javaScript nima haqida ma'lumot ber", output: " veb sahifalarga interfaollik qoʻshish uchun ishlatiladigan dasturlash tili. Uning kodi tugmalar hamda matn maydonini yaratish, kontentni oʻzgartirish va shu kabilar uchun HTML fayli bilan birlashtirilishi mumkin. U PHP kabi boshqa veb dasturlash tillari bilan ham birlashtirilishi mumkin. JavaScript odatda maʼlumotni tasdiqlashi yoki tugma bosilishi kabi harakatlarni amalga oshirishi mumkin bo‘lgan HTML shakllari bilan birga ishlatiladi. " },
+    { input: "statik maʼlumot nima haqida ma'lumot ber", output: "Statik ma'lumotlar  -  odatda oʻzgarmaydigan ma’lumotlar." },
+    { input: "Dinamik maʼlumot nima haqida ma'lumot ber", output: "Dinamik ma'lumotlar  -  foydalanuvchining aralashuvisizavtomatik yangilanadi." },
+    { input: "Bevosita maʼlumot manbai nima haqida ma'lumot ber", output: "Bevosita maʼlumot manbai  -   ishlatish maqsadiga koʻra yigʻilgan maʼlumot." },
+    { input: "Bilvosita maʼlumot manbai nima haqida ma'lumot ber", output: "Blvosita maʼlumot manbai  -  boshqa maqsadda yigʻilgan maʼlumot (ikkilamchi manba)." },
+    { input: "Bilim nima haqida ma'lumot ber", output: "Bilim - Bilim asosan inson biladigan narsalardir. Ularni bilimlarbazasi deb atash ham mumkin. Kishi tajriba orttirishi yokioʻrganib borishi natijasida undagi bilimlar bazasi ham kengayib boradi. Bilim insondan oʻz tajribasi va bilimlar bazasiga asoslanib, axborot nima ekanini tushunishni talab qiladi. Shahzoda Salmon 2012-yilning 18-iyunida Saudiya Arabistonining valiahd shahzodasi etib tayinlandi. Bu – axborot. 2014-yil 1-avgustda uning 2 yildan beri valiahd shahzoda ekanini bilish esa bilim hisoblanadi. Bilim maʼlumotlarni izohlashga imkon beradi. Dasturlash nuqtayi nazaridan, bilim qoidalar va faktlardan iborat bilimlar bazasiga asoslangan tizimlar, model yaratish va modellashtirish dasturiy ta’minotidagi bilimlardan foydalanish orqali mashina biladigan narsalar hamdir" },
+
 ];
 
 
