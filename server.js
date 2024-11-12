@@ -52,7 +52,7 @@ let messages = [];
 app.use('/uploads', express.static(uploadDir));
 
 
-const negativeWords = ["darmayitsan", "yomon", "qoyilmasdan", "buzilgan", "ajratish", "qotilgan", "fuckyou ", "fckyou ", "fucku", " suka ", "darmayit ", "cort"];  // Salbiy so'zlar ro'yxati
+const negativeWords = ["darmayitsan", "yomon","fuckyou ", "fckyou ", "fucku", " suka ", "darmayit ", "cort"];  // Salbiy so'zlar ro'yxati
 const personalPronouns = ["sen", "men", "u", "biz", "siz"];  // Shaxsiy zamonlar
 
 // Response (Javob) uchun sokin so'zlarni aniqlash
