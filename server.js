@@ -123,7 +123,7 @@ function Chatai(id, msgId, replyfor, from, body, msgfrom, msgto) {
         } else {
             res = repsonses.output.replace("$1", resFor.fullName.split(" ")[0]);
         }
-        messages.push({ id, msgId, replyfor:"", from, body, msgfrom, msgto });
+        messages.push({ id, msgId, replyfor, from, body, msgfrom, msgto });
         messages.push({ id: 11101, msgId: Date.now(), replyfor: msgId, from: "Ai", body: res, msgfrom: 11101, msgto: id });
     } else {
         // Agar response yoki resFor topilmadi, xatolikni qaytaring
@@ -137,12 +137,17 @@ function Chatai(id, msgId, replyfor, from, body, msgfrom, msgto) {
 }
 
 
+
+
 app.post('/send', upload.single('image'), (req, res) => {
     const { id, msgId, replyfor, from, body, msgfrom, msgto } = req.body;
     const image = req.file ? req.file.filename : null; // Check if file was uploaded
     if (body.startsWith('#ai')) {
         Chatai(id, msgId, replyfor, from, body, msgfrom, msgto);
-    } else {
+    } else if(body.startsWith('#help')){
+        messages.push({ id, msgId, replyfor, from, body, image, msgfrom, msgto });
+        messages.push({ id:"111111", msgId:Date.now(), replyfor:msgId, from, body:"This function isn't working yet.", image, msgfrom, msgto });
+    }else{
         messages.push({ id, msgId, replyfor, from, body, image, msgfrom, msgto });
 
     }
