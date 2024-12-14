@@ -222,7 +222,7 @@ app.post("/search-info", async (req, res) => {
 
         // Ma'lumotlarni xabarlar ro‘yxatiga qo'shish. 
         messages.push({
-            id:"11000",
+            id:"11115",
             msgId,
             replyfor:msgId,
             from,
