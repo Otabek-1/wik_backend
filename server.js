@@ -9,6 +9,7 @@ const FuzzySet = require('fuzzyset.js');
 const users = require("./datas/data");
 const { message } = require("telegraf/filters");
 
+const pool = require("./pg");
 
 const Users = users.users;
 const Informations = users.informations;
@@ -52,7 +53,7 @@ let messages = [];
 app.use('/uploads', express.static(uploadDir));
 
 
-const negativeWords = ["darmayitsan", "yomon", "qoyilmasdan", "buzilgan", "ajratish", "qotilgan", "fuckyou ", "fckyou ", "fucku", " suka ", "darmayit ", "cort"];  // Salbiy so'zlar ro'yxati
+const negativeWords = ["darmayitsan", "yomon", "fuckyou ", "fckyou ", "fucku", " suka ", "darmayit ", "cort"];  // Salbiy so'zlar ro'yxati
 const personalPronouns = ["sen", "men", "u", "biz", "siz"];  // Shaxsiy zamonlar
 
 // Response (Javob) uchun sokin so'zlarni aniqlash
@@ -123,7 +124,7 @@ function Chatai(id, msgId, replyfor, from, body, msgfrom, msgto) {
         } else {
             res = repsonses.output.replace("$1", resFor.fullName.split(" ")[0]);
         }
-        messages.push({ id, msgId, replyfor, from, body, msgfrom, msgto });
+        messages.push({ id, msgId, replyfor: "", from, body, msgfrom, msgto });
         messages.push({ id: 11101, msgId: Date.now(), replyfor: msgId, from: "Ai", body: res, msgfrom: 11101, msgto: id });
     } else {
         // Agar response yoki resFor topilmadi, xatolikni qaytaring
@@ -144,10 +145,10 @@ app.post('/send', upload.single('image'), (req, res) => {
     const image = req.file ? req.file.filename : null; // Check if file was uploaded
     if (body.startsWith('#ai')) {
         Chatai(id, msgId, replyfor, from, body, msgfrom, msgto);
-    } else if(body.startsWith('#help')){
+    } else if (body.startsWith('#help')) {
         messages.push({ id, msgId, replyfor, from, body, image, msgfrom, msgto });
-        messages.push({ id:"111111", msgId:Date.now(), replyfor:msgId, from, body:"This function isn't working yet.", image, msgfrom, msgto });
-    }else{
+        messages.push({ id: "111111", msgId: Date.now(), replyfor: msgId, from, body: "This function isn't working yet.", image, msgfrom, msgto });
+    } else {
         messages.push({ id, msgId, replyfor, from, body, image, msgfrom, msgto });
 
     }
@@ -182,4 +183,62 @@ app.get("/users", (req, res) => {
     res.send(JSON.stringify(Users));
 })
 
+app.post("/teach", (req, res) => {
+    const { data } = req.body;
+    try {
+        const result = pool.query(`INSERT INTO info (data) VALUES ($1)`, [data]);
+        res.status(201).json({message:"Information added successfully!"});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message:error});
+    }
+})
+
+app.post("/search-info", async (req, res) => {
+    const { id, msgId, replyfor, from, body, msgfrom, msgto } = req.body; // So'rovdan barcha ma'lumotlarni olish.
+
+    if (!body) {
+        return res.status(400).json({ error: "Qidiruv uchun body parametri kerak." });
+    }
+
+    try {
+        // Qidiruv so‘rovi `info` jadvalida.
+        const query = `
+            SELECT * FROM info
+            WHERE data ILIKE $1
+        `;
+        const values = [`%${body}%`]; // Qisman mos kelishni ta'minlash uchun.
+
+        const result = await pool.query(query, values);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "Hech qanday ma'lumot topilmadi." });
+        }
+
+        let text = "";
+        result.rows.forEach(row => {
+            text += `${row.data}\n`; // Natijalarni birlashgan qisman mos kelish.
+        })
+
+        // Ma'lumotlarni xabarlar ro‘yxatiga qo'shish. 
+        messages.push({
+            id:"11000",
+            msgId,
+            replyfor:msgId,
+            from,
+            body: text, // Natijalarni saqlash.
+            msgfrom,
+            msgto
+        });
+
+        return res.status(200).json(result.rows); // Natijalarni qaytarish.
+    } catch (err) {
+        console.error("Xato yuz berdi:", err);
+        return res.status(500).json({ error: "Serverda xato yuz berdi." });
+    }
+});
+
+
+
+pool.connect();
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
